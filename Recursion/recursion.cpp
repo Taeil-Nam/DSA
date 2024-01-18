@@ -16,13 +16,12 @@ recursion(parameter)
 
 void recursion(int number)
 {
-	if (number <= 0)
+	if (number > 0)
 	{
-		return;
+		std::cout << number << std::endl;	// Ascending statement. (재귀 함수 호출 시점에 실행됨)
+		recursion(number - 1);
+		std::cout << "recursion(" << number << ") finished." << std::endl;	// Descending statement. (재귀 함수 탈출 시점에 실행됨)
 	}
-	std::cout << number << std::endl;	// Ascending statement. (재귀 함수 호출 시점에 실행됨)
-	recursion(number - 1);
-	std::cout << "recursion(" << number << ") finished." << std::endl;	// Descending statement. (재귀 함수 탈출 시점에 실행됨)
 }
 
 int main()
