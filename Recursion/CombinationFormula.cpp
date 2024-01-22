@@ -3,6 +3,7 @@
 // Combination Formula = nCr = n! / (r! x (n-r)!)
 long Combination(int n, int r)
 {
+	// Pascal Triangle 활용.
 	if (r <= 0 || r >= n)
 	{
 		return 1;
