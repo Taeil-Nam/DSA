@@ -13,7 +13,7 @@ int main()
     cin.tie(0);
 
     int pictureCnt = 0;
-    int maxWidth = 0;
+    int maxArea = 0;
     queue<pair<int, int> > Q;
     int dx[4] = {1, 0, -1, 0};
     int dy[4] = {0, 1, 0, -1};
@@ -30,7 +30,7 @@ int main()
             visit[row][col] = true;
             Q.push(make_pair(row, col));
             pictureCnt++;
-            int width = 1;
+            int area = 1;
             while (!Q.empty())// O(n)
             {
                 pair<int, int> current = Q.front();
@@ -43,14 +43,14 @@ int main()
                     if (visit[ny][nx] || board[ny][nx] == 0) continue;
                     visit[ny][nx] = true;
                     Q.push(make_pair(ny, nx));
-                    width++;
+                    area++;
                 }
             }
-            maxWidth = ::max(width, maxWidth);
+            maxArea = ::max(area, maxArea);
         }
     }
     cout << pictureCnt << "\n";
-    cout << maxWidth;
+    cout << maxArea;
 
     return 0;
 }
@@ -64,7 +64,7 @@ BFS 기본 로직을 중첩 for문으로 묶는다.
 방문하지 않는 위치를 시작 위치로 정하고, BFS를 수행한다.
 
 BFS 로직을 수행할 때마다 pictureCnt를 1 올린다.
-BFS 로직 내부에서, 다음 위치로 이동할 때마다 width를 올린다.
+BFS 로직 내부에서, 다음 위치로 이동할 때마다 area를 올린다.
 
-BFS를 마치면, maxWidth를 갱신한다.
+BFS를 마치면, maxArea를 갱신한다.
 */
