@@ -25,6 +25,34 @@ void dfs(int y, int x){
     }
 }
 
+void combi(int start, vector<int>& v){
+    if (v.size() == 3){
+        int cnt = 0;
+        fill(&visited[0][0], &visited[0][0] + (10 * 10), 0);
+        map[emptyPos[v[0]].first][emptyPos[v[0]].second] = 1;
+        map[emptyPos[v[1]].first][emptyPos[v[1]].second] = 1;
+        map[emptyPos[v[2]].first][emptyPos[v[2]].second] = 1;
+        for (auto pos : virusPos)
+            dfs(pos.first, pos.second);
+        for (int y = 0; y < N; y++){
+            for (int x = 0; x < M; x++){
+                if (map[y][x] == 0 && visited[y][x] == false)
+                    cnt++;
+            }
+        }
+        ret = max(ret, cnt);
+        map[emptyPos[v[0]].first][emptyPos[v[0]].second] = 0;
+        map[emptyPos[v[1]].first][emptyPos[v[1]].second] = 0;
+        map[emptyPos[v[2]].first][emptyPos[v[2]].second] = 0;
+        return;
+    }
+    for (int i = start + 1; i < emptyPos.size(); i++){
+        v.push_back(i);
+        combi(i, v);
+        v.pop_back();
+    }
+}
+
 int main(){
     ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     cin >> N >> M;
@@ -35,29 +63,8 @@ int main(){
             if (map[i][j] == 2) virusPos.push_back({i, j});
         }
     }
-    for (int i = 0; i < emptyPos.size(); i++){
-        for (int j = i + 1; j < emptyPos.size(); j++){
-            for (int k = j + 1; k < emptyPos.size(); k++){
-                int cnt = 0;
-                fill(&visited[0][0], &visited[0][0] + (10 * 10), 0);
-                map[emptyPos[i].first][emptyPos[i].second] = 1;
-                map[emptyPos[j].first][emptyPos[j].second] = 1;
-                map[emptyPos[k].first][emptyPos[k].second] = 1;
-                for (auto pos : virusPos)
-                    dfs(pos.first, pos.second);
-                for (int y = 0; y < N; y++){
-                    for (int x = 0; x < M; x++){
-                        if (map[y][x] == 0 && visited[y][x] == false)
-                            cnt++;
-                    }
-                }
-                ret = max(ret, cnt);
-                map[emptyPos[i].first][emptyPos[i].second] = 0;
-                map[emptyPos[j].first][emptyPos[j].second] = 0;
-                map[emptyPos[k].first][emptyPos[k].second] = 0;
-            }
-        }
-    }
+    vector<int> v;
+    combi(-1, v);
     cout << ret;
 
     return 0;
